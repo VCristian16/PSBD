@@ -24,8 +24,8 @@ public class UserPage extends HttpServlet {
 		String nume = null, prenume = null;
 
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/eduarddb;");
+			Class.forName ("oracle.jdbc.driver.OracleDriver");
+			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","Cristi96vsl");
 			PreparedStatement ps = con.prepareStatement("select first_name,last_name from customers where id=? and password=?");
 			PreparedStatement ps2 = con.prepareStatement("select * from Accounts where customer_id=?");
 			PreparedStatement ps3 = con.prepareStatement("select t.iban,t.amount,a.currency,t.type,t.details from Customers c,Accounts a, transactions t where c.id=? and c.id=a.customer_id and a.iban=t.iban");

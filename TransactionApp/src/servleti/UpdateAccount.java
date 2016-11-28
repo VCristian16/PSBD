@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +23,8 @@ public class UpdateAccount extends HttpServlet {
 		String customerid = request.getParameter("customerid");
 
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/eduarddb;");
+			Class.forName ("oracle.jdbc.driver.OracleDriver");
+			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","Cristi96vsl");
 			if(amount!=0){
 			PreparedStatement ps = con.prepareStatement("update accounts set amount=? where iban=?");
  			ps.setString(2,iban);

@@ -21,8 +21,8 @@ public class DeleteAccount extends HttpServlet {
 		String iban = request.getParameter("iban");
 
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/eduarddb;");
+			Class.forName ("oracle.jdbc.driver.OracleDriver");
+			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","Cristi96vsl");
 
 			PreparedStatement ps1 = con.prepareStatement("select * from accounts where iban=?");
 			PreparedStatement ps2 = con.prepareStatement("delete from accounts where iban=?");

@@ -2,10 +2,10 @@ package servleti;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,34 +18,34 @@ public class DeleteCustomer extends HttpServlet {
 
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		String userid = request.getParameter("id");
+		String client_id = request.getParameter("id");
+		CallableStatement callableStatement = null;
 
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/eduarddb;");
+			Class.forName ("oracle.jdbc.driver.OracleDriver");
+			Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","hr","hr");
+			String deleteClientProc = "{call DELETE_CLIENTS(?)}";
+			
+			callableStatement = conn.prepareCall(deleteClientProc);
+			callableStatement.setString(1, client_id);
+			callableStatement.execute();
+			System.out.println("Client Deleted!");
 
-			PreparedStatement ps1 = con.prepareStatement("select * from customers where id=?");
-			PreparedStatement ps2 = con.prepareStatement("delete from customers where id=?");
-			ps2.setString(1, userid);
-			ps1.setString(1, userid);
+			
 			out.print("<!DOCTYPE html>");
 			out.print("<html>");
 			out.print("<head>");
 			out.print("</head>");
 			out.print("<body>");
 
-			ResultSet rs = ps1.executeQuery();
-
-			while (rs.next()) {
-				out.print("You removed the customer " + rs.getString(1) + " with the following info<br>");
-				out.print(rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4) + " " + rs.getString(5) + " "
-						+ rs.getString(6) + " " + rs.getString(7) + " ");
-			}
-
-			ps2.executeUpdate();
-
+				out.print("You removed the customer " + client_id + " with the following info<br>");
+			
+				out.print("<form   action=\"AdminPage\" method=\"post\">");
+				out.print("<input type=\"submit\" id=\"AdminPage\"   value=\"Home\">");
 			out.print("</body>");
 			out.print("</html>");
+
+			
 		} catch (Exception e) {
 			System.out.println(e);
 		}

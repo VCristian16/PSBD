@@ -2,11 +2,16 @@ package servleti;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,29 +25,57 @@ public class ReadById extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String userid = request.getParameter("userid");
 
-		String nume = null, prenume = null;
-
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/eduarddb;");
-			PreparedStatement ps = con.prepareStatement("select first_name,last_name from customers where id=?");
-			PreparedStatement ps2 = con.prepareStatement("select * from Accounts where customer_id=?");
-			PreparedStatement ps3 = con.prepareStatement(
-					"select t.iban,t.amount,a.currency,t.type,t.details from Customers c,Accounts a, transactions t where c.id=? and c.id=a.customer_id and a.iban=t.iban");
+			Class.forName ("oracle.jdbc.driver.OracleDriver");
+			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","hr","hr");
+			CallableStatement callableStatement = null;
+			String getDBUSERByUserIdSql = "{call QUERRY_CLIENTS(?,?,?,?,?,?)}";
+			
+			
+				
+				callableStatement = con.prepareCall(getDBUSERByUserIdSql);
 
-			ps.setString(1, userid);
-			ps2.setString(1, userid);
-			ps3.setString(1, userid);
+				callableStatement.setString(1, userid);
+				callableStatement.registerOutParameter(2, java.sql.Types.VARCHAR);
+				callableStatement.registerOutParameter(3, java.sql.Types.NUMERIC);
+				callableStatement.registerOutParameter(4, java.sql.Types.NUMERIC);
+				callableStatement.registerOutParameter(5, java.sql.Types.VARCHAR);
+				callableStatement.registerOutParameter(6, java.sql.Types.VARCHAR);
 
-			ResultSet rs = ps.executeQuery();
-			ResultSet rs2 = ps2.executeQuery();
-			ResultSet rs3 = ps3.executeQuery();
+				// execute getDBUSERByUserId store procedure
+				callableStatement.executeUpdate();
+                
+				String Name = callableStatement.getString(2);
+				String CNP = callableStatement.getString(3);
+				String phone = callableStatement.getString(4);
+				String address = callableStatement.getString(5);
+				String subsidaryCity = callableStatement.getString(6);
+				
+				Map<String,String> map = new HashMap<String,String>();
+					map.put("userid",userid);
+					map.put("fname",Name);
+					map.put("cnp",CNP);
+					map.put("phone",phone);
+					map.put("adress", address);
+					map.put("subs",subsidaryCity);
 
-			while (rs.next()) {
-				prenume = rs.getString(1);
-				nume = rs.getString(2);
-			}
 
+				request.setAttribute("jsonString",map);
+				
+			
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/admin.jsp");
+				dispatcher.forward(request, response);
+				
+				
+				/*	
+
+				System.out.println("UserName : " + Name);
+				System.out.println("CreatedBy : " + CNP);
+				System.out.println("CreatedDate : " + phone);
+
+	
+
+			
 			out.print("<!DOCTYPE html>");
 			out.print("<html>");
 			out.print("<head>");
@@ -51,30 +84,15 @@ public class ReadById extends HttpServlet {
 			out.print("</head>");
 			out.print("<body>");
 			out.print(" <div style=\"height: 20% ;width: 100%;	background-color: #cceeff;float: top; \">");
-			out.print("	Bine ai venit " + nume + " " + prenume);
+			out.print("	Bine ai venit " + Name );
+			out.print("<form   action=\"AdminPage\" method=\"post\">");
+			out.print("<input type=\"submit\" id=\"AdminPage\"   value=\"Home\">");
 			out.print("	</div>");
 			out.print("<div style=\"height: 80% ;width: 50%;	background-color: #cceeff;float: left; \">");
 
 			out.print("<table border=2>");
 
-			out.print("<tr>");
-			out.print("<th>IBAN</th>");
-			out.print("<th>SOLD</th>");
-			out.print("<th>VALUTA</th>");
-			out.print("</tr>");
-			while (rs2.next()) {
-				out.print("<tbody class=\"table-hover\">");
-				out.print("<tr>");
-
-				out.print("<td>" + rs2.getString(1) + "</td>");
-				out.print("<td>" + rs2.getString(2) + "</td>");
-				out.print("<td>" + rs2.getString(3) + "</td>");
-
-				out.print("</tr>");
-
-			}
-			out.print("</tbody>");
-			out.print("</table>");
+	
 
 			out.print("	</div>");
 			out.print(
@@ -82,33 +100,38 @@ public class ReadById extends HttpServlet {
 			out.print("<table border=2>");
 
 			out.print("<tr>");
-			out.print("<th>IBAN</th>");
-			out.print("<th>VALOARE</th>");
-			out.print("<th>VALUTA</th>");
-			out.print("<th>TIP</th>");
-			out.print("<th>DETALII</th>");
+			out.print("<th>CNP</th>");
+			out.print("<th>Telefon</th>");
+			out.print("<th>Adresa</th>");
+			out.print("<th>Filiala</th>");
 			out.print("</tr>");
-			while (rs3.next()) {
+			
 				out.print("<tbody class=\"table-hover\">");
 				out.print("<tr>");
 
-				out.print("<td>" + rs3.getString(1) + "</td>");
-				out.print("<td>" + rs3.getString(2) + "</td>");
-				out.print("<td>" + rs3.getString(3) + "</td>");
-				out.print("<td>" + rs3.getString(4) + "</td>");
-				out.print("<td>" + rs3.getString(5) + "</td>");
+				out.print("<td>" + CNP + "</td>");
+				out.print("<td>" + phone + "</td>");
+				out.print("<td>" + address + "</td>");
+				out.print("<td>" + subsidaryCity + "</td>");
+				;
 				out.print("</tr>");
 
-			}
+			
 			out.print("</tbody>");
 			out.print("</table>");
 			out.print("	</div>");
 			out.print("</body>");
 			out.print("</html>");
+		*/
+				
+				
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 
+		
+
 		out.close();
+		
 	}
 }

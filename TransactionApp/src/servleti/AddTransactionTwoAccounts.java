@@ -24,8 +24,8 @@ public class AddTransactionTwoAccounts extends HttpServlet {
 		String details = request.getParameter("details");
 	 
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/eduarddb;");
+			Class.forName ("oracle.jdbc.driver.OracleDriver");
+			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","Cristi96vsl");
 			PreparedStatement ps = con.prepareStatement("insert into transactions (amount,type,details,iban) values (?,?,?,?)");
 			ps.setDouble(1, amount);
 			ps.setString(2, "DEBIT");
@@ -72,7 +72,7 @@ public class AddTransactionTwoAccounts extends HttpServlet {
  				ps4.setString(2, ibanto);
 				ps4.executeUpdate();
 			 
-			//
+			///
 			
 			out.print("<!DOCTYPE html>");
 			out.print("<html>");

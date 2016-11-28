@@ -23,8 +23,8 @@ public class ReadByName extends HttpServlet {
 
  
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/eduarddb;");
+			Class.forName ("oracle.jdbc.driver.OracleDriver");
+			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","Cristi96vsl");
  			PreparedStatement ps2 = con.prepareStatement("select * from Customers where first_name=? and last_name=?");
 			 
  			ps2.setString(1, firstname);
