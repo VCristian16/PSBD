@@ -61,7 +61,7 @@ String userId=data.get("userid");
   </thead>
   <tbody>
     <tr>
-      <td> <input  name="userid" value="<%=userId %>">  </td> 
+      <td> <%=userId %> </td> 
       <td> <input  name="firstname"  value="<%=Name %>">  </td>
       <td><input   name="cnp" value="<%=CNP %>">  </td>
 	  <td><div contenteditable> <input type="text" name="phone" value="<%=Phone %>"> </div></td>
@@ -72,6 +72,11 @@ String userId=data.get("userid");
   </tbody>
 </table>
  <button type="submit" name="update"  style=" margin-left: 800px; opacity: 1;">Update</button>
+</form>
+
+
+<form   action="AdminPage" method="post">
+<button type="submit" name="update"  style=" margin-left: 800px; opacity: 1;">Home</button>
 </form>
 
 </body>
