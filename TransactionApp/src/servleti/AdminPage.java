@@ -44,8 +44,7 @@ public class AdminPage extends HttpServlet {
 		}
 		
 		
-		
-		
+				
 		request.setAttribute("nume",nume);
 		request.setAttribute("lista",lst);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/interface.jsp");

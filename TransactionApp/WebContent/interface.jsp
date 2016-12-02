@@ -15,9 +15,12 @@
 %>
 
 <body>
-	<div style= "border: 2px solid	;height: 20% ;width: 99%	;background-color: #4CAF50;float:top ">
-	<p> Bine ai venit <%= nume %> <p>
-		
+	<div
+		style="border: 2px solid; height: 20%; width: 99%; background-color: #4CAF50; float: top">
+		<p>
+			Bine ai venit
+			<%= nume %>
+		<p>
 	</div>
 
 
@@ -41,11 +44,12 @@
 				<input type=text name=phone id=phone> Phone
 			</fieldset>
 			<fieldset>
-				<select>
+				<select name="item" id="item">
 					<%
 						for (int i = 0; i < list.size(); i++) {
 					%>
-					<option>
+					<option value="<%=list.get(i)%>">
+
 						<%=list.get(i)%>
 					</option>
 					<%
@@ -59,6 +63,7 @@
 		</form>
 		<hr>
 
+		<!-- 
 		<p>Delete Customer</p>
 		<form action=DeleteCustomer method=post>
 
@@ -68,9 +73,44 @@
 
 			<input type=submit id=DeleteCustomer value=Delete>
 		</form>
+		
 
+        -->
+        
+        <p>   See client information </p>
+		<form action=ReadByNameCnp method=post>
 
-
+			<fieldset>
+				<input type=text name=name >Name
+			</fieldset>
+			<fieldset>
+				<input type=text name=cnp >CNP
+			</fieldset>
+			<input type=submit id=login value=Ok>
+		</form>
+		
+		<hr>
+		
+		<p> See subsidary  clients </p>
+		<form action=ReadBySubsidary method=post>
+		<fieldset>
+				<select name="itemClients" id="itemClients">
+					<%
+						for (int i = 0; i < list.size(); i++) {
+					%>
+					<option value="<%=list.get(i)%>">
+						<%=list.get(i)%>
+					</option>
+					<%
+						}
+					%>
+				</select>
+		</fieldset>
+		
+		<input type=submit id=users value=Ok>
+		</form>
+		
+		
 
 		<hr>
 		Update Customer
@@ -89,18 +129,17 @@
 				<input type=text name=phone id=phone> Phone
 			</fieldset>
 			<fieldset>
-				<select>
+				<select name="itemUpdate" id="itemUpdate">
 					<%
 						for (int i = 0; i < list.size(); i++) {
 					%>
-					<option>
+					<option value="<%=list.get(i)%>">
 						<%=list.get(i)%>
 					</option>
 					<%
 						}
 					%>
 				</select>
-
 			</fieldset>
 
 			<input type=submit id=login value=Update>
@@ -110,29 +149,9 @@
 
 	<div
 		style="border: 2px solid; height: 900px; width: 33%; background-color: #cceeff; display: inline; float: left">
-		<p>List information</p>
-        <hr>
-		<p>See information by customer id</p>
-		<form action=ReadById id=ReadById method=post>
-
-			<fieldset>
-				<input type=text name=userid id=id>Customer Id
-			</fieldset>
-			<input type=submit id=login value=SeeResults>
-		</form>
-
+		<p>Manage Accounts</p>
 		<hr>
-		See information by name
-		<form action=ReadByName id=ReadByName method=post>
-
-			<fieldset>
-				<input type=text name=firstname id=id>Name
-			</fieldset>
-			<input type=submit id=login value=SeeResults>
-		</form>
-
-		<fieldset>Manage Accounts</fieldset>
-		<br> Add Account
+			<p> Add Account<p>
 		<form action=AddAccount method=post>
 
 			<fieldset>
@@ -199,19 +218,19 @@
 		<p>One account transactions</p>
 		<form action=AddTransactionOneAccount id=formtransaction method=post>
 			<fieldset>
-				 <input type=text name=iban id=iban>IBAN
+				<input type=text name=iban id=iban>IBAN
 			</fieldset>
 
 			<fieldset>
-				 <input type=text name=amount id=amount>Amount
+				<input type=text name=amount id=amount>Amount
 			</fieldset>
 			<fieldset>
-				<input  type=text name=type id=type>
+				<input type=text name=type id=type>
 			</fieldset>
 			<fieldset>
-				 <select name=type> 
-					<option value=DEBIT>DEBIT</option> 
-					<option value=CREDIT>CREDIT</option> 
+				<select name=type>
+					<option value=DEBIT>DEBIT</option>
+					<option value=CREDIT>CREDIT</option>
 				</select>
 			</fieldset>
 
@@ -227,16 +246,15 @@
 
 		<form action=AddTransactionTwoAccounts id=formtransaction2 method=post>
 			<fieldset>
-				<input type=text name=ibanfrom
-					id=ibanfrom>IBAN From
+				<input type=text name=ibanfrom id=ibanfrom>IBAN From
 			</fieldset>
 
 			<fieldset>
-				<input type=text name=ibanto	id=ibanto>IBAN To
+				<input type=text name=ibanto id=ibanto>IBAN To
 			</fieldset>
 
 			<fieldset>
-				 <input type=text name=amount id=amount>Amount
+				<input type=text name=amount id=amount>Amount
 			</fieldset>
 
 			<fieldset>
@@ -245,6 +263,6 @@
 
 			<input type=submit id=login value=MakeTransaction>
 		</form>
-		</div>
+	</div>
 </body>
 </html>

@@ -2,10 +2,12 @@ package servleti;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,29 +26,25 @@ public class AddAccount extends HttpServlet {
 	 
 		try {
 			Class.forName ("oracle.jdbc.driver.OracleDriver");
-			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","Cristi96vsl");
-			PreparedStatement ps = con.prepareStatement("insert into accounts values (?,?,?,?)");
-			ps.setString(1, iban);
-			ps.setDouble(2, amount);
-			ps.setString(3, currency);
-			ps.setString(4, customerid);
-			 
-			ps.executeUpdate();
-			out.print("<!DOCTYPE html>");
-			out.print("<html>");
-			out.print("<head>");
-			out.print("</head>");
-			out.print("<body>");
-			out.print(" You just added Account "+iban
-					+ "with the following information "+amount+" "+currency+" "+currency);
-					 
-
-			out.print("</body>");
-			out.print("</html>");
+			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","hr","hr");
+			String insertClientAccount = "{call INSERT_ACCOUNTS(?,?,?,?)}";
+			CallableStatement callableStatement = null;
+			callableStatement = con.prepareCall(insertClientAccount);
+			callableStatement.setString(1, iban);
+			callableStatement.setString(2, currency);
+			callableStatement.setDouble(3, amount);
+			callableStatement.setString(4, customerid);
+			
+			callableStatement.executeUpdate();
+			System.out.println("Account is inserted into DBUSER table!");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("AdminPage");
+			dispatcher.forward(request, response);
+			
+			
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-
+			
 		out.close();
 	}
 }

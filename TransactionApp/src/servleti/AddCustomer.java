@@ -18,11 +18,12 @@ public class AddCustomer extends HttpServlet {
 
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		String subsidary_id = request.getParameter("item");
 		String name = request.getParameter("firstname");
 		String cnp = request.getParameter("cnp");
 		String address = request.getParameter("address");
-		int phone = Integer.parseInt(request.getParameter("phone"));
-		String subsidary_id = request.getParameter("subsidary_id");
+		String phone = request.getParameter("phone");
+		
 		
 
 		try {
@@ -33,7 +34,7 @@ public class AddCustomer extends HttpServlet {
 			callableStatement = con.prepareCall(insertClientProc);
 			callableStatement.setString(1, name);
 			callableStatement.setString(2, cnp);
-			callableStatement.setInt(3, phone);
+			callableStatement.setString(3, phone);
 			callableStatement.setString(4, address);
 			callableStatement.setString(5, subsidary_id);
 			callableStatement.executeUpdate();

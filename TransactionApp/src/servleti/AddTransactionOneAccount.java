@@ -19,8 +19,9 @@ public class AddTransactionOneAccount extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		String iban = request.getParameter("iban");
-		Double amount = Double.parseDouble(request.getParameter("amount"));
 		String type = request.getParameter("type");
+		Double amount = Double.parseDouble(request.getParameter("amount"));
+		
 		String details = request.getParameter("details");
 	 
 		try {

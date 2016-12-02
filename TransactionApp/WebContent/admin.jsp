@@ -9,12 +9,12 @@
 <style>
 table {
     border-collapse: collapse;
-    width: 100%;
+    width:40;
 }
 
 th, td {
     text-align: left;
-    padding: 8px;
+    padding: 5px;
 }
 
 td[contenteditable=true]
@@ -39,6 +39,11 @@ String Phone=data.get("phone");
 String Address=data.get("adress");
 String subsd=data.get("subs");
 String userId=data.get("userid");
+String iban=data.get("iban");
+String currency=data.get("currency");
+String amount=data.get("amount");
+
+List<Object> list= (ArrayList<Object>) request.getAttribute("listObj");
 
 
 
@@ -48,7 +53,7 @@ String userId=data.get("userid");
 
 <form   action="UpdateCustomer" method="post">
 
-<table>
+<table >
   <thead>
     <tr>
       <th>User ID</th>
@@ -57,20 +62,33 @@ String userId=data.get("userid");
       <th>Phone</th>
       <th>Address</th>
       <th>Subsidiary</th>
+      <th>IBAN</th>
+      <th>Currency</th>
+      <th>Amount</th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <td> <%=userId %> </td> 
-      <td> <input  name="firstname"  value="<%=Name %>">  </td>
-      <td><input   name="cnp" value="<%=CNP %>">  </td>
-	  <td><div contenteditable> <input type="text" name="phone" value="<%=Phone %>"> </div></td>
-	  <td><div contenteditable> <input type="text" name="address" value="<%=Address %>"> </div></td>
-	  <td><div contenteditable> <input type="text" name="subsidary_id" value="<%= subsd%>"> </div></td>
-	
-    </tr>
-  </tbody>
-</table>
+			<tbody>
+				<tr>
+					<td><%=userId%></td>
+					<td><input size="10" type="text" name="firstname"
+						value="<%=Name%>"></td>
+					<td><input size="10" type="text" name="cnp" 
+						value="<%=CNP%>"></td>
+					<td><input size="10" type="text" name="phone"
+						value="<%=Phone%>"></td>
+					<td><input size="10" type="text" name="address"
+						value="<%=Address%>"></td>
+					<td><input size="10" type="text" name="subsidary_id"
+						value="<%=subsd%>"></td>
+					<td><input size="10" type="text" name="iban" value="<%=iban%>"></td>
+					<td><input size="10" type="text" name="currency"
+						value="<%=currency%>"></td>
+					<td><input size="10" type="text" name="amount"
+						value="<%=amount%>"></td>
+
+				</tr>
+			</tbody>
+		</table>
  <button type="submit" name="update"  style=" margin-left: 800px; opacity: 1;">Update</button>
 </form>
 
