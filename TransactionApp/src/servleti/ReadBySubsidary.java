@@ -49,6 +49,11 @@ public class ReadBySubsidary extends HttpServlet {
 				String phone = rs.getString("PHONE");
 				String address = rs.getString("ADDRESS");
 				String cnp=rs.getString("CNP");
+				/*
+				String iban=rs.getString("IBAN");
+				String amount=rs.getString("AMOUNT");
+				String currency=rs.getString("CURRENCY");
+				*/
 				String[]  line={client_id,name,cnp,phone,address};
 				list.add(line);
 				
@@ -57,6 +62,7 @@ public class ReadBySubsidary extends HttpServlet {
 			}
 			
 			request.setAttribute("listObj",list);
+			request.setAttribute("subsidary", subsidary_id);
 			System.out.println("Stop");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/clients.jsp");
 			dispatcher.forward(request, response);

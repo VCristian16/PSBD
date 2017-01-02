@@ -9,24 +9,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
 </head>
-<% String nume = (String) request.getAttribute("nume"); 
-   List<String> list =(ArrayList<String>) request.getAttribute("lista");
+<% 
+//String nume = (String) request.getAttribute("nume"); 
+
+List<String> list =(ArrayList<String>) request.getAttribute("lista");
+
 
 %>
 
 <body>
 	<div
 		style="border: 2px solid; height: 20%; width: 99%; background-color: #4CAF50; float: top">
-		<p>
-			Bine ai venit
-			<%= nume %>
-		<p>
+		<a href="CustomerMenu.jsp">
+			Info Employees
+		</a>
 	</div>
 
 
 
 	<div
-		style="border: 2px solid; height: 900px; width: 33%; background-color: #cceeff; display: inline; float: left">
+		style="border: 2px solid; height: 1000px; width: 33%; background-color: #cceeff; display: inline; float: left">
 		<p>Manage Customers</p>
 		<hr>
 		<p>Add Customer</p>
@@ -77,12 +79,9 @@
 
         -->
         
-        <p>   See client information </p>
+        <p>   See and Update client information </p>
 		<form action=ReadByNameCnp method=post>
 
-			<fieldset>
-				<input type=text name=name >Name
-			</fieldset>
 			<fieldset>
 				<input type=text name=cnp >CNP
 			</fieldset>
@@ -113,6 +112,7 @@
 		
 
 		<hr>
+		<!--  
 		Update Customer
 		<form action=UpdateCustomer method=post>
 
@@ -144,67 +144,113 @@
 
 			<input type=submit id=login value=Update>
 		</form>
+		
+		-->
 	</div>
 
 
 	<div
-		style="border: 2px solid; height: 900px; width: 33%; background-color: #cceeff; display: inline; float: left">
+		style="border: 2px solid; height: 1000px; width: 33%; background-color: #cceeff; display: inline; float: left">
 		<p>Manage Accounts</p>
 		<hr>
 			<p> Add Account<p>
 		<form action=AddAccount method=post>
 
-			<fieldset>
-				<input type=text name=iban id=iban>IBAN
-			</fieldset>
-
+	
 			<fieldset>
 				<input type=text name=amount id=amount>Amount
 			</fieldset>
 
 			<fieldset>
-				<input type=text name=currency id=currency>Currency
+				
+				<select name=currency id=currency>
+					<option value=EUR>EUR</option>
+					<option value=USD>USD</option>
+					<option value=RON>RON</option>
+				</select>
+				Currency
 			</fieldset>
 
 			<fieldset>
-				<input type=text name=customerid id=customerid>Customer Id
+				<input type=text name=cnp id=cnp>CNP
 			</fieldset>
 
 			<input type=submit id=login value=Add>
 		</form>
-		<hr>
-
-		Delete Account
-		<form action=DeleteAccount method=post>
-			<fieldset>
-				<input type=text name=iban id=ibantodelete>Insert IBAN
-			</fieldset>
-			<input type=submit id=DeleteCustomer value=Delete>
-		</form>
+		
+		
 
 		<hr>
 		Update Account
 		<form action=UpdateAccount method=post>
 
+			
 			<fieldset>
 				<input type=text name=iban id=iban>IBAN
 			</fieldset>
-
 			<fieldset>
-				<input type=text name=amount id=amount>Amount
-			</fieldset>
-
-			<fieldset>
-				<label for=currency></label> <input type=text name=currency
-					id=currency>Currency
-			</fieldset>
-
-			<fieldset>
-				<input type=text name=customerid id=customerid>Customer Id
+				<input type=text name=amount id=amount> Amount
 			</fieldset>
 
 			<input type=submit id=login value=Update>
 		</form>
+
+		<hr>
+		<p>Manage Cards</p>
+		<hr>
+		
+			<p> Add Card<p>
+		<form action=AddCard method=post>
+
+			<fieldset>
+				<input type=text name=cardn id=card>Card Number
+			</fieldset>
+
+			<fieldset>
+				<input type=text name=cardexp id=cardexp>Expire
+			</fieldset>
+
+			<fieldset>
+				<input type=text name=cardcrcode id=cardcrcode>Cr Code
+			</fieldset>
+
+			<fieldset>
+				<select name=type>
+					<option value=DEBIT>DEBIT</option>
+					<option value=CREDIT>CREDIT</option>
+				</select>Type
+			</fieldset>
+			
+			<fieldset>
+				<input type=text name=cardiban id=cardiban>Card IBAN
+			</fieldset>
+
+			<input type=submit id=card value=Add>
+		</form>
+		
+		<hr>
+		
+			<p> Update Card<p>
+		<form action=UpdateCard method=post>
+		
+			<fieldset>
+				<input type=text name=cardnmb id=cardnmb>Card Number
+			</fieldset>
+			
+			<fieldset>
+				<input type=text name=cardexp id=cardexp>Expire
+			</fieldset>
+			
+			<fieldset>
+				<input type=text name=cardcrcode id=cardcrcode>Cr Code
+			</fieldset>
+			
+			
+
+
+			<input type=submit id=card value=Ok>
+		</form>
+		
 
 
 	</div>
@@ -212,7 +258,7 @@
 
 
 	<div
-		style="border: 2px solid; height: 900px; width: 33%; background-color: #cceeff; display: inline; float: left">
+		style="border: 2px solid; height: 1000px; width: 33%; background-color: #cceeff; display: inline; float: left">
 		<p>Make transactions</p>
 		<hr>
 		<p>One account transactions</p>

@@ -9,22 +9,32 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
   <servlet>
     <servlet-name>Login</servlet-name>
     <servlet-class>servleti.Login</servlet-class>
   </servlet>
+  
   <servlet>
     <servlet-name>UserPage</servlet-name>
     <servlet-class>servleti.UserPage</servlet-class>
   </servlet>
+  
   <servlet>
     <servlet-name>AdminPage</servlet-name>
     <servlet-class>servleti.AdminPage</servlet-class>
   </servlet>
+  
+   <servlet>
+    <servlet-name>AddCard</servlet-name>
+    <servlet-class>servleti.AddCard</servlet-class>
+  </servlet>
+  
   <servlet>
     <servlet-name>AddCustomer</servlet-name>
     <servlet-class>servleti.AddCustomer</servlet-class>
   </servlet>
+  
   <servlet>
     <servlet-name>DeleteCustomer</servlet-name>
     <servlet-class>servleti.DeleteCustomer</servlet-class>
@@ -32,6 +42,10 @@
   <servlet>
     <servlet-name>UpdateCustomer</servlet-name>
     <servlet-class>servleti.UpdateCustomer</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UpdateCard</servlet-name>
+    <servlet-class>servleti.UpdateCard</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>AddAccount</servlet-name>
@@ -61,10 +75,25 @@
     <servlet-name>ReadByName</servlet-name>
     <servlet-class>servleti.ReadByName</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ReadByNameCnp</servlet-name>
+    <servlet-class>servleti.ReadByNameCnp</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ReadBySubsidary</servlet-name>
+    <servlet-class>servleti.ReadBySubsidary</servlet-class>
+  </servlet>
+  
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
     <url-pattern>/Login</url-pattern>
   </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>AddCard</servlet-name>
+    <url-pattern>/AddCard</url-pattern>
+  </servlet-mapping>
+  
   <servlet-mapping>
     <servlet-name>UserPage</servlet-name>
     <url-pattern>/UserPage</url-pattern>
@@ -112,5 +141,17 @@
   <servlet-mapping>
     <servlet-name>ReadByName</servlet-name>
     <url-pattern>/ReadByName</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ReadByNameCnp</servlet-name>
+    <url-pattern>/ReadByNameCnp</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ReadBySubsidary</servlet-name>
+    <url-pattern>/ReadBySubsidary</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>UpdateCard</servlet-name>
+    <url-pattern>/UpdateCard</url-pattern>
   </servlet-mapping>
 </web-app>

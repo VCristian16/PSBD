@@ -6,7 +6,10 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +26,14 @@ public class AddCustomer extends HttpServlet {
 		String cnp = request.getParameter("cnp");
 		String address = request.getParameter("address");
 		String phone = request.getParameter("phone");
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("cnp",cnp);
+		map.put("fname",name);				
+		map.put("phone",phone);
+		map.put("adress", address);
+		map.put("subsd",subsidary_id);
 		
+
 		
 
 		try {
@@ -41,20 +51,14 @@ public class AddCustomer extends HttpServlet {
 			System.out.println("Record is inserted into DBUSER table!");
 
 
-			out.print("<!DOCTYPE html>");
-			out.print("<html>");
-			out.print("<head>");
-			out.print("</head>");
-			out.print("<body>");
-			out.print(" You just added Customer with the following information "+name+" " + cnp+ " " + subsidary_id+ " "+ address+ " "+ phone);
-
-
-			out.print("</body>");
-			out.print("</html>");
+			
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 
+		request.setAttribute("jsonString",map);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/addCust.jsp");
+		dispatcher.forward(request, response);
 		out.close();
 	}
 }

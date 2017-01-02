@@ -2,10 +2,12 @@ package servleti;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,47 +20,30 @@ public class UpdateAccount extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		String iban = request.getParameter("iban");
-		Double amount = Double.parseDouble(request.getParameter("amount"));
-		String currency = request.getParameter("currency");
-		String customerid = request.getParameter("customerid");
+		String amount = request.getParameter("amount");
+
 
 		try {
 			Class.forName ("oracle.jdbc.driver.OracleDriver");
-			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","Cristi96vsl");
-			if(amount!=0){
-			PreparedStatement ps = con.prepareStatement("update accounts set amount=? where iban=?");
- 			ps.setString(2,iban);
-			ps.setDouble(1,amount);
-			ps.executeUpdate();
-			}
-			if(currency.length()!=0){
-				PreparedStatement ps = con.prepareStatement("update accounts set currency=? where iban=?");
-	 			ps.setString(2,iban);
-				ps.setString(1,currency);
-				ps.executeUpdate();
-				}
-			if(customerid.length()!=0){
-				PreparedStatement ps = con.prepareStatement("update accounts set customer_id=? where iban=?");
-	 			ps.setString(2,iban);
-				ps.setString(1,customerid);
-				ps.executeUpdate();
-				}
-			 
-			out.print("<!DOCTYPE html>");
-			out.print("<html>");
-			out.print("<head>");
-			out.print("</head>");
-			out.print("<body>");
-			out.print(" You just Updated Account "+iban
-					+ "with the following information "+amount+" "+currency+ " " + customerid);
-					 
-
-			out.print("</body>");
-			out.print("</html>");
+			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","hr","hr");
+			String updateAccountProc = "{call UPDATE_ACCOUNTS(?,?)}";
+			CallableStatement callableStatement = null;
+			callableStatement = con.prepareCall(updateAccountProc);
+			callableStatement.setString(1, iban);
+			callableStatement.setString(2, amount);
+			callableStatement.executeUpdate();
+			System.out.println("Acount Updated!!");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("AdminPage");
+			dispatcher.forward(request, response);
+					
+	
+		
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-
+		
+		
 		out.close();
+		
 	}
 }

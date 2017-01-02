@@ -24,7 +24,7 @@ public class UpdateCustomer extends HttpServlet {
 		String address = request.getParameter("address");
 		String phone = request.getParameter("phone");
 		String subsidary_id = request.getParameter("subsidary_id");
-		
+	
 
 		try {
 			Class.forName ("oracle.jdbc.driver.OracleDriver");
@@ -37,7 +37,7 @@ public class UpdateCustomer extends HttpServlet {
 			callableStatement.setString(3, cnp);
 			callableStatement.setString(4, phone);
 			callableStatement.setString(5, address);
-			callableStatement.setString(6, subsidary_id);			
+			callableStatement.setString(6, subsidary_id);	
 			callableStatement.executeUpdate();
 			System.out.println("User Update!!");
 
